@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "react"
+  ],
+  "extends": ["airbnb-typescript"],
+  "parserOptions": {
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "rules": {
+    "no-debugger": "off",
+    "no-console": 0,
+    "@typescript-eslint/indent": ["error", 4]
+  }
+}
