@@ -17,6 +17,11 @@
   "rules": {
     "no-debugger": "off",
     "no-console": 0,
-    "@typescript-eslint/indent": ["error", 4]
+    "@typescript-eslint/indent": ["error", 4],
+    "react/jsx-indent": "off",
+    "import/prefer-default-export": "off",
+    "default-case": "off",
+    "class-methods-use-this": "off",
+    "no-plusplus": "off"
   }
 }
