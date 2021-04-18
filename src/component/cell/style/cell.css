@@ -1,0 +1,63 @@
+.cell {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #b4b4ff;
+}
+
+.cell_hit {
+  box-shadow: inset 0 0 0 2px blue;
+  position: relative;
+}
+
+.cell_killed {
+  box-shadow: inset 0 0 0 2px red;
+  position: relative;
+}
+
+.cell_killed::after,
+.cell_killed::before,
+.cell_hit::after,
+.cell_hit::before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 5px;
+  left: 50%;
+}
+
+.cell_killed::after,
+.cell_hit::after {
+  transform: translate(-50%) rotate(45deg);
+}
+
+.cell_killed::before,
+.cell_hit::before {
+  transform: translate(-50%) rotate(-45deg);
+}
+
+.cell_killed::after,
+.cell_killed::before {
+  background-color: red;
+}
+
+.cell_hit::after,
+.cell_hit::before {
+  background-color: blue;
+}
+
+.cell_missed {
+  box-shadow: inset 0 0 0 2px grey;
+  position: relative;
+}
+
+.cell_missed::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: grey;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
