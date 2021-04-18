@@ -13,6 +13,7 @@ module.exports = {
         contentBase: path.join(__dirname, 'build'),
         open: true,
         port: 1337,
+        host: '127.0.0.1',
     },
     module: {
         rules: [
