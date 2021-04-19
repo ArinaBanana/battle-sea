@@ -21,7 +21,7 @@ export const boats: Array<Boat> = [
         direction: Direction.Vertical,
         parts: [
             BoatPartType.Undamaged,
-            BoatPartType.Damaged,
+            BoatPartType.Undamaged,
         ],
     },
     {
@@ -68,9 +68,9 @@ export const boats: Array<Boat> = [
         },
         direction: Direction.Vertical,
         parts: [
-            BoatPartType.Damaged,
-            BoatPartType.Damaged,
-            BoatPartType.Damaged,
+            BoatPartType.Undamaged,
+            BoatPartType.Undamaged,
+            BoatPartType.Undamaged,
         ],
     },
     {

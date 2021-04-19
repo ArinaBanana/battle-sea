@@ -12,21 +12,6 @@ interface GameState {
     missedCoordinates: Array<Point>
 }
 
-const mocksMissed:Array<Point> = [
-    {
-        x: 0,
-        y: 0,
-    },
-    {
-        x: 3,
-        y: 2,
-    },
-    {
-        x: 9,
-        y: 5,
-    },
-];
-
 export class Game extends PureComponent<GameProps, GameState> {
     constructor(props: GameProps) {
         super(props);
@@ -35,7 +20,6 @@ export class Game extends PureComponent<GameProps, GameState> {
 
         this.state = {
             boats: initialBoats,
-            missedCoordinates: mocksMissed,
         };
     }
 
