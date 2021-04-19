@@ -1,22 +1,46 @@
 import React, { PureComponent } from 'react';
 import { CellType } from '../../types/cell';
 import {
-    Boat, BoatPartType, Point, Direction,
+    Boat, BoatPartType, Point,
 } from '../../types/boat';
 import { Cell } from '../cell/cell';
 import './style/field.css';
+import { getPartPosition } from '../../utils/getPartPosition';
 
 const QUANTITY_CELLS = 10;
 
 interface FieldProps {
     boats: Array<Boat>,
-    missedCoordinates: Array<Point>
+    missedCoordinates: Array<Point>,
+    onHitPoint: (point: Point) => void,
 }
 
 export class Field extends PureComponent<FieldProps> {
-    private getCells() {
+    constructor(props: FieldProps) {
+        super(props);
+
+        this.handleCellClick = this.handleCellClick.bind(this);
+    }
+
+    private handleCellClick(index: number) {
+        const { onHitPoint } = this.props;
+        const point = this.getPointByIndex(index);
+        onHitPoint(point);
+    }
+
+    private getPointByIndex(index: number): Point {
+        const y = Math.floor(index / QUANTITY_CELLS);
+        const x = index % QUANTITY_CELLS;
+
+        return {
+            x,
+            y,
+        };
+    }
+
+    private getCellTypes() {
         const { boats, missedCoordinates } = this.props;
-        const types = this.getTypes(QUANTITY_CELLS ** 2);
+        const types = this.getDefaultCellTypes(QUANTITY_CELLS ** 2);
 
         boats.forEach((boat) => {
             const { headPosition, direction, parts } = boat;
@@ -26,7 +50,7 @@ export class Field extends PureComponent<FieldProps> {
             );
 
             parts.forEach((part, index) => {
-                const position: Point = this.getPosition(headPosition, direction, index);
+                const position: Point = getPartPosition(headPosition, direction, index);
                 const cellType = this.getCellType(part, isDead);
                 const typesIndex = this.getIndexForType(position);
 
@@ -43,31 +67,10 @@ export class Field extends PureComponent<FieldProps> {
         return types;
     }
 
-    private getTypes(quantity: number) {
+    private getDefaultCellTypes(quantity: number) {
         return new Array(quantity)
             .fill(null)
             .map(() => CellType.Empty);
-    }
-
-    private getPosition(
-        headPosition: Point,
-        direction: Direction,
-        index: number,
-    ) {
-        const position = {
-            ...headPosition,
-        };
-
-        switch (direction) {
-            case Direction.Horizontal:
-                position.x += index;
-                break;
-            case Direction.Vertical:
-                position.y += index;
-                break;
-        }
-
-        return position;
     }
 
     private getCellType(
@@ -93,11 +96,21 @@ export class Field extends PureComponent<FieldProps> {
     }
 
     render() {
-        const cells = this.getCells();
+        const cellTypes = this.getCellTypes();
 
         return (
             <div className="game__field field">
-                {cells.map((cell) => <Cell type={cell} />)}
+                {
+                    cellTypes.map((type, index) => (
+                        <Cell
+                            /* eslint-disable-next-line react/no-array-index-key */
+                            key={index}
+                            type={type}
+                            index={index}
+                            onClick={this.handleCellClick}
+                        />
+                    ))
+                }
             </div>
         );
     }
